@@ -8,7 +8,12 @@ const mailgun = require("mailgun-js");
 
 // MAILGUN
 
-const mg = mailgun({ apiKey: process.env.API_KEY, domain: process.env.DOMAIN });
+const api_key = process.env.API_KEY;
+const domain = process.env.DOMAIN;
+
+console.log(api_key, domain);
+
+const mg = mailgun({ apiKey: api_key, domain: domain });
 
 const app = express();
 app.use(formidable());
@@ -16,14 +21,16 @@ app.use(cors());
 
 app.post("/form", async (req, res) => {
     try {
+        console.log(req.fields);
         const data = {
             from: `${req.fields.firstName} ${req.fields.lastName} <${req.fields.email}>`,
-            to: "flo.le@icloud.com",
+            to: "florianejojo@gmail.com",
             subject: "coucou",
             text: `${req.fields.message}`,
         };
 
         mg.messages().send(data, function (error, body) {
+            console.log("error:", error);
             console.log(body);
         });
 

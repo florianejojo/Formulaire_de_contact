@@ -6,7 +6,8 @@ $.addEventListener("DOMContentLoaded", () => {
     //     console.log("Click");
     // });
 
-    $.querySelector("button").addEventListener("click", () => {
+    $.querySelector("button").addEventListener("click", async () => {
+        // event.preventDefault();
         console.log("click");
         const data = {
             firstName: $.querySelector("#firstName").value,
@@ -14,6 +15,9 @@ $.addEventListener("DOMContentLoaded", () => {
             email: $.querySelector("#email").value,
             message: $.querySelector("#message").value,
         };
-        // J'ai l'objet à envoyer dans postman pour tester ma route
+
+        const response = await axios.post("http://localhost:3000/form", data);
+        console.log(response);
+        alert("Merci");
     });
 });
